@@ -1,0 +1,102 @@
+html, body {
+    background-color: #CEE5F2;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.title {
+    margin: 0 10px 0 10px;
+    color: #CEE5F2;
+    font-family: 'Staatliches', cursive;
+}
+
+.title2 {
+    margin: 10px 0 0 180px;
+    text-align: right;
+    font-weight: 200;
+    /* color: #133C55; */
+    color: #4788c7;
+}
+
+.title3 {
+    text-align: center;
+    color: #133C55;
+    font-family: 'Staatliches', cursive;
+    margin-top: 15px;
+}
+
+.bg-light {
+    background-color: #133C55!important;
+}
+
+.nav-link {
+    color: #4788c7;
+    font-size: 20px;
+    font-weight: 200;
+}
+
+.nav-link:hover {
+    color: #84D2F6;
+}
+
+.nav-link.disabled {
+    color: #84D2F6;
+    pointer-events: none;
+    cursor: default;
+}
+
+.btn-outline-secondary {
+    color: #84D2F6;
+    border-color: #84D2F6;
+    font-family: 'Staatliches', cursive;
+    margin-left: 10px;
+}
+
+.btn-outline-secondary:hover {
+    color: #133C55;
+    background-color: #84D2F6;
+}
+
+.btn-outline-primary {
+    color: #133C55;
+    border-color: #133C55;
+    margin-bottom: 15px;
+    font-size: 27px;
+    font-weight: 300;
+}
+
+.btn-outline-primary:hover {
+    background-color: #133C55;
+    color: #4788c7;
+}
+
+footer {
+  display: block;
+  background-size: 100% 200px;
+}
+
+.footer-top {
+    background-color: #4788c7;
+    height: 6px;
+}
+
+.footer-bottom {
+    background-color: #133C55;
+    color: #91E5F6;
+    font-size: 20px;
+    font-weight: 100;
+}
+
+.content {
+    height: 550px;
+    width: auto;
+    background-image: url("./images/audio1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+}
+
+.container {
+    flex: 1;
+}
