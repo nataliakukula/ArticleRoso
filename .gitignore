@@ -59,3 +59,9 @@ typings/
 
 # next.js build output
 .next
+
+# code needed for scrapes
+scrape.html
+
+#temporary working files
+scrape.js

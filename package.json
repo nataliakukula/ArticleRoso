@@ -23,6 +23,8 @@
     "express": "^4.16.4",
     "express-handlebars": "^3.0.0",
     "mongoose": "^5.4.5",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "nodemon": "^1.18.9",
+    "puppeteer": "^1.11.0"
   }
 }

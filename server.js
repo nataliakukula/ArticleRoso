@@ -8,8 +8,10 @@ const mongoose = require("mongoose");
 const exphbs = require("express-handlebars");
 
 //SCRAPING TOOLS:
-//Promise-based http library
-const axios = require("axios");
+//Promise-based http library -> if static html scraping
+// const axios = require("axios"); 
+//Headless high level API control -> necessary for dynamic html scraping
+const puppeteer = require('puppeteer');
 //Sever-side jQuery implementation
 const cheerio = require("cheerio");
 
@@ -38,9 +40,14 @@ app.engine("handlebars", exphbs({
 }));
 app.set("view engine", "handlebars");
 
+//mongoose.Promise = global.Promise; is this necessary?
+
 // Connect to the Mongo DB
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://user:password1@ds161144.mlab.com:61144/heroku_lnrdjn18";
+mongoose.connect(MONGODB_URI, {
+    useNewUrlParser: true
+    // useMongoClient: true
+});
 
 // ROUTES:
 // Render the profile page:
@@ -70,42 +77,38 @@ app.get("/saved", function (req, res) {
     // });
 });
 
-// // A GET route for scraping the echoJS website
-// app.get("/scrape", function (req, res) {
-//     // First, we grab the body of the html with axios
-//     axios.get("http://www.echojs.com/").then(function (response) {
-//         // Then, we load that into cheerio and save it to $ for a shorthand selector
-//         const $ = cheerio.load(response.data);
+// A GET route for scraping the SoundCloud website
+app.get("/scrape", function (req, res) {
 
-//         // Now, we grab every h2 within an article tag, and do the following:
-//         $("article h2").each(function (i, element) {
-//             // Save an empty result object
-//             const result = {};
+    async function scrape() {
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage();
+        await page.goto('https://soundcloud.com/discover/');
 
-//             // Add the text and href of every link, and save them as properties of the result object
-//             result.title = $(this)
-//                 .children("a")
-//                 .text();
-//             result.link = $(this)
-//                 .children("a")
-//                 .attr("href");
+        let content = await page.content();
+        let $ = cheerio.load(content);
 
-//             // Create a new Article using the `result` object built from scraping
-//             db.Article.create(result)
-//                 .then(function (dbArticle) {
-//                     // View the added result in the console
-//                     console.log(dbArticle);
-//                 })
-//                 .catch(function (err) {
-//                     // If an error occurred, log it
-//                     console.log(err);
-//                 });
-//         });
+        $('a.playableTile__mainHeading.audibleTile__mainHeading.playableTile__heading.playableTile__audibleHeading.audibleTile__audibleHeading').each(function (i, element) {
+            let title = $(this).text();
+            let playlistLink = $(this).attr("href");
+            let imageLink = $(this).parent().parent().prev().children("a.playableTile__artworkLink.audibleTile__artworkLink").find("span").css("background-image");
 
-//         // Send a message to the client
-//         res.send("Scrape Complete");
-//     });
-// });
+            let playlist = {
+                title: title.replace(/\n/g, '').trim(),
+                playlistLink: "https://soundcloud.com" + playlistLink,
+                imageLink: imageLink.replace(/^url\(['"]?/, '').replace(/['"]?\)$/, '')
+            };
+
+            // console.log(playlist);
+
+        });
+
+        browser.close();
+    }
+
+    scrape();
+
+});
 
 // // Route for getting all Articles from the db
 // app.get("/articles", function (req, res) {
