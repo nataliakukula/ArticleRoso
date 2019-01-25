@@ -53,15 +53,9 @@ mongoose.connect(MONGODB_URI, {
 // Render the profile page:
 app.get("/", function (req, res) {
 
-    res.render("index", {});
-
-    // db.Gift.findAll().then(function (giftObject) {
-
-    //     console.log(giftObject);
-
-    //     res.render("index", { gift: giftObject });
-
-    // });
+    db.Playlist.find({})
+        .then(dbPlaylists => res.render("index", { playlists: dbPlaylists }))
+        .catch(error => res.json(error));
 });
 
 app.get("/saved", function (req, res) {
@@ -79,6 +73,8 @@ app.get("/saved", function (req, res) {
 
 // A GET route for scraping the SoundCloud website
 app.get("/scrape", function (req, res) {
+
+    let result = [];
 
     async function scrape() {
         const browser = await puppeteer.launch();
@@ -100,10 +96,17 @@ app.get("/scrape", function (req, res) {
             };
 
             // console.log(playlist);
+            result.push(playlist);
 
         });
 
+        // console.log(result);
         browser.close();
+
+        db.Playlist.create(result)
+            .then(dbPlaylists => res.send("Scrape Complete"))
+            .catch(error => res.json(error));
+
     }
 
     scrape();
