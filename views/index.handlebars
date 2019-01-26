@@ -23,7 +23,9 @@
     <div class="row">
         <div class="col-3"></div>
         <div class="col-3">
-            <button class="btn btn-outline-primary" type="button">Scrape new playlists</button>
+            <a href="/scrape">
+                <button class="btn btn-outline-primary" type="button">Scrape new playlists</button>
+            </a>
         </div>
         <div class="col-3">
             <a href="/saved">
@@ -35,7 +37,14 @@
 </div>
 
 <div class="row scraped">
-
+    {{#each playlist}}
+    <div style="float: left;" class="playlist">
+        <a href="{{playlistLink}}" target="_blank">
+            <img src="{{imageLink}}" alt="image-link">
+            <p style="width: 15em; height: 1.2em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{title}}</p>
+        </a>
+    </div>
+    {{/each}}
 </div>
 
 <footer>

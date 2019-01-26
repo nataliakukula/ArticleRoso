@@ -54,7 +54,8 @@ mongoose.connect(MONGODB_URI, {
 app.get("/", function (req, res) {
 
     db.Playlist.find({})
-        .then(dbPlaylists => res.render("index", { playlists: dbPlaylists }))
+        .limit(36)
+        .then(dbPlaylist => res.render("index", { playlist: dbPlaylist }))
         .catch(error => res.json(error));
 });
 
