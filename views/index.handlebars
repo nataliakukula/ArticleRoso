@@ -17,9 +17,8 @@
 
 <div class="content"></div>
 
-<p class="title3">Oh no! Looks like you need to add some new playlists:</p>
-
 <div class="container">
+    <p class="title3">Oh no! Looks like you need to add some new playlists:</p>
     <div class="row">
         <div class="col-3"></div>
         <div class="col-3">
@@ -38,15 +37,17 @@
 
 <div style="margin-left: 22px;" class="row scraped">
     {{#each playlist}}
+    {{#unless saved}}
     <div style="float: left; margin: 15px;" class="playlist">
         <a class="playlist-link" href="{{playlistLink}}" target="_blank">
             <img class="playlist-image" src="{{imageLink}}" alt="image-link">
             <p class="playlist-title">{{title}}</p>
         </a>
-        <button class="save-playlist" data-id="{{_id}}" style="font-size: 15px; margin-left: 21%;" class="btn btn-sm btn-outline-primary"
+        <button data-id="{{_id}}" style="font-size: 15px; margin-left: 21%;" class="save-playlist btn btn-sm btn-outline-primary"
             type="button">Save
             playlists</button>
     </div>
+    {{/unless}}
     {{/each}}
 </div>
 

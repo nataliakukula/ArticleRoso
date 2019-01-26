@@ -50,7 +50,7 @@ mongoose.connect(MONGODB_URI, {
 });
 
 // ROUTES:
-// Render the profile page abd send the database documents to the screen
+// Render the home playlists page and send the database documents to the screen
 app.get("/", function (req, res) {
 
     db.Playlist.find({})
@@ -59,17 +59,13 @@ app.get("/", function (req, res) {
         .catch(error => res.json(error));
 });
 
+// Render the saved playlists page and send the database documents to the screen
 app.get("/saved", function (req, res) {
 
-    res.render("saved", {});
-
-    // db.Gift.findAll().then(function (giftObject) {
-
-    //     console.log(giftObject);
-
-    //     res.render("index", { gift: giftObject });
-
-    // });
+    db.Playlist.find({})
+        .limit(36)
+        .then(dbPlaylist => res.render("saved", { playlist: dbPlaylist }))
+        .catch(error => res.json(error));
 });
 
 // Scrape the SoundCloud website
@@ -132,25 +128,25 @@ app.put("/playlist/:id", function (req, res) {
         });
 });
 
-// // Route for saving/updating an Article's associated Note
-// app.post("/articles/:id", function (req, res) {
-//     // Create a new note and pass the req.body to the entry
-//     db.Note.create(req.body)
-//         .then(function (dbNote) {
-//             // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
-//             // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
-//             // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
-//             return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
-//         })
-//         .then(function (dbArticle) {
-//             // If we were able to successfully update an Article, send it back to the client
-//             res.json(dbArticle);
-//         })
-//         .catch(function (err) {
-//             // If an error occurred, send it to the client
-//             res.json(err);
-//         });
-// });
+// Saving/Updating a Playlist's associated Note
+app.post("/note/:id", function (req, res) {
+
+    db.Note.create(req.body)
+        .then(function (dbNote) {
+            // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
+            // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
+            // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
+            return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
+        })
+        .then(function (dbArticle) {
+
+            res.json(dbArticle);
+        })
+        .catch(function (err) {
+
+            res.json(err);
+        });
+});
 
 // Start the server
 app.listen(PORT, function () {

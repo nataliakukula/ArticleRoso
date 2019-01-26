@@ -14,9 +14,8 @@
 
 <div class="content"></div>
 
-<p class="title3">Oh no! Looks like you need to add some new playlists:</p>
-
 <div class="container">
+    <p class="title3">Oh no! Looks like you need to add some new playlists:</p>
     <div class="row">
         <div class="col-4"></div>
         <div class="col-4">
@@ -27,19 +26,20 @@
         <div class="col-4"></div>
     </div>
 </div>
-{{#each playlist}}
-{{#if saved}}
-<div style="float: left; margin: 15px;" class="playlist">
-    <a class="playlist-link" href="{{playlistLink}}" target="_blank">
-        <img class="playlist-image" src="{{imageLink}}" alt="image-link">
-        <p class="playlist-title">{{title}}</p>
-        <button style="font-size: 15px; margin-left: 21%;" class="btn btn-sm btn-outline-primary" type="button">Add
-            Note</button>
-        <button style="font-size: 15px; margin-left: 21%;" class="btn btn-sm btn-outline-primary" type="button">Delete</button>
-    </a>
+<div style="margin-left: 22px;" class="row scraped">
+    {{#each playlist}}
+    {{#if saved}}
+    <div style="float: left; margin: 15px;" class="playlist">
+        <a class="playlist-link" href="{{playlistLink}}" target="_blank">
+            <img class="playlist-image" src="{{imageLink}}" alt="image-link">
+            <p class="playlist-title">{{title}}</p>
+        </a>
+        <button style="font-size: 15px; margin-left: 15%;" class="note btn btn-sm btn-outline-primary" type="button">Notes</button>
+        <button style="font-size: 15px; margin-left: 7%;" class="btn btn-sm btn-outline-primary" type="button">Delete</button>
+    </div>
+    {{/if}}
+    {{/each}}
 </div>
-{{/if}}
-{{/each}}
 
 <footer>
     <div class="footer-top"></div>

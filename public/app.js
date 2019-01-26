@@ -1,5 +1,20 @@
 // DOM fully loaded
 $(document).ready(function () {
+  //Don't show message and buttons if SoundCloud is scraped
+  if ($('.scraped').children().length == 0) {
+    $(".container").show();
+  } else {
+    $(".container").hide();
+  }
+
+  $(".note").click(function () {
+
+    event.preventDefault();
+    //Create modal card on create event
+    // $(".modal-body").text(uniqueCode);
+    $("#myModal").modal("show");
+  });
+
   //Save the playlist
   $(function () {
     $(".save-playlist").on("click", function (event) {
@@ -7,7 +22,7 @@ $(document).ready(function () {
       event.preventDefault();
 
       let id = $(this).data("id");
-      console.log(id);
+      // console.log(id);
       // let thisId = $(this).attr("data-id");
 
       $.ajax("/playlist/" + id, {
