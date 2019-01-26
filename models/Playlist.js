@@ -20,6 +20,11 @@ const PlaylistSchema = new Schema({
     required: true
   },
 
+  saved: {
+    type: Boolean,
+    default: false
+  },
+
   //Populate Playlist with an associated Note
   note: {
     type: Schema.Types.ObjectId,

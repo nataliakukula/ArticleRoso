@@ -36,13 +36,16 @@
     </div>
 </div>
 
-<div class="row scraped">
+<div style="margin-left: 22px;" class="row scraped">
     {{#each playlist}}
-    <div style="float: left;" class="playlist">
-        <a href="{{playlistLink}}" target="_blank">
-            <img src="{{imageLink}}" alt="image-link">
-            <p style="width: 15em; height: 1.2em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{title}}</p>
+    <div style="float: left; margin: 15px;" class="playlist">
+        <a class="playlist-link" href="{{playlistLink}}" target="_blank">
+            <img class="playlist-image" src="{{imageLink}}" alt="image-link">
+            <p class="playlist-title">{{title}}</p>
         </a>
+        <button class="save-playlist" data-id="{{_id}}" style="font-size: 15px; margin-left: 21%;" class="btn btn-sm btn-outline-primary"
+            type="button">Save
+            playlists</button>
     </div>
     {{/each}}
 </div>

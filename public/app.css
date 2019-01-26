@@ -98,3 +98,33 @@ footer {
 .container {
     flex: 1;
 }
+
+.playlist {
+    background-color: #91E5F6;
+}
+
+.playlist-link:hover {
+    color: #91E5F6;
+    text-decoration: none;
+}
+
+.playlist-title {
+    color: #133C55;
+    font-size: 15px;
+    font-family: 'Staatliches', cursive;
+    text-align: center;
+    width: 13em;
+    height: 1.2em;
+    overflow: hidden;
+    text-overflow:
+    ellipsis;
+    white-space: nowrap;
+}
+
+.playlist-title:hover {
+    color: black;
+}
+
+.playlist-image:hover {
+    opacity: 0.7;
+}
