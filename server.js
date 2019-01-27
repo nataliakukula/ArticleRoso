@@ -101,7 +101,10 @@ app.get("/scrape", function (req, res) {
         browser.close();
 
         db.Playlist.create(result)
-            .then(dbPlaylists => res.send("Scrape Complete"))
+            .then(dbPlaylists =>
+                console.log("Scrape Complete"),
+                res.redirect("/")
+            )
             .catch(error => res.json(error));
 
     }
@@ -146,6 +149,58 @@ app.post("/note/:id", function (req, res) {
 
             res.json(err);
         });
+});
+
+// Clear the collection
+app.get("/clearall", function (req, res) {
+
+    db.Playlist.remove({}, function (error, response) {
+
+        if (error) {
+            console.log(error);
+            res.send(error);
+        }
+        else {
+            console.log(response);
+            res.redirect("/");
+        }
+    });
+});
+
+// Clear the saved playlists
+app.get("/clearsaved", function (req, res) {
+
+    db.Playlist.remove({ saved: true }, function (error, response) {
+
+        if (error) {
+            console.log(error);
+            res.send(error);
+        }
+        else {
+            console.log(response);
+            res.redirect("/saved");
+        }
+    });
+});
+
+// Delete One from the DB
+app.get("/clear/:id", function (req, res) {
+    // remove object instance of ObjectID
+    db.Playlist.remove(
+        {
+            _id: req.params.id
+        },
+        function (error, response) {
+            if (error) {
+                console.log(error);
+                res.send(error);
+            }
+            else {
+                console.log(response);
+                res.redirect("/saved");
+            }
+        }
+    );
 });
 
 // Start the server

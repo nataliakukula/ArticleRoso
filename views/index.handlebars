@@ -4,10 +4,12 @@
         <h1 class="title"> Mongo Scraper </h1>
         <a class="nav-link disabled" href="/">Home</a>
         <a class="nav-link" href="/saved">Playlists</a>
-        <a href="/scrape">
+        <a class="scraping" href="/scrape">
             <button class="btn btn-sm btn-outline-secondary" type="button">Scrape New Playlists!</button>
         </a>
-        <button class="btn btn-sm btn-outline-secondary" type="button">Clear Playlists!</button>
+        <a href="/clearall">
+            <button class="btn btn-sm btn-outline-secondary" type="button">Clear Playlists!</button>
+        </a>
         <h4 style="margin: 10px 0 0 180px;" class="title2">
             Scrape some SoundCloud trendy shhh...
             <img style="width: 45px; height: auto; margin-bottom: 10px;" src="/images/silence.png" alt="silence">
@@ -15,7 +17,11 @@
     </form>
 </nav>
 
-<div class="content"></div>
+<div class="content">
+    <div id="loading" style="justify-content: center;" class="row">
+        <img style="width: 100px; height: 100px; margin-top: 15%;" src="/images/loading.gif" alt="loading">
+    </div>
+</div>
 
 <div class="container">
     <p class="title3">Oh no! Looks like you need to add some new playlists:</p>
@@ -23,7 +29,7 @@
         <div class="col-3"></div>
         <div class="col-3">
             <a href="/scrape">
-                <button class="btn btn-outline-primary" type="button">Scrape new playlists</button>
+                <button class="scraping btn btn-outline-primary" type="button">Scrape new playlists</button>
             </a>
         </div>
         <div class="col-3">

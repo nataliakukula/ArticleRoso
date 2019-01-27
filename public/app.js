@@ -1,17 +1,25 @@
 // DOM fully loaded
 $(document).ready(function () {
   //Don't show message and buttons if SoundCloud is scraped
-  if ($('.scraped').children().length == 0) {
+  if ($(".scraped").children().length == 0) {
     $(".container").show();
   } else {
     $(".container").hide();
+    $("#loading").hide();
   }
+  // Only show the loading on "/scrape" trigger
+  $("#loading").hide();
+  //Show loading gif before page redirects from the "/scrape"
+  $(".scraping").on("click", function () {
+    $("#loading").show();
+    // $(".container").hide();
+  });
 
   $(".note").click(function () {
 
     event.preventDefault();
     //Create modal card on create event
-    // $(".modal-body").text(uniqueCode);
+    // $(".modal-body").text("add button");
     $("#myModal").modal("show");
   });
 
@@ -36,9 +44,28 @@ $(document).ready(function () {
         function (data) {
           console.log(data);
           // Reload the page to get the updated list
-          // location.reload();
+          location.reload();
         }
       );
+    });
+  });
+
+  // When user clicks the delete button for a saved playlist
+  $(function () {
+    $(".delete").on("click", function (event) {
+
+      event.preventDefault();
+
+      let id = $(this).data("id");
+
+      $.ajax({
+        type: "GET",
+        url: "/clear/" + id,
+        success: function (response) {
+          console.log(response);
+          location.reload();
+        }
+      });
     });
   });
 
