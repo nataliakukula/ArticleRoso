@@ -133,12 +133,14 @@ footer {
 
 .modal-content {
     color: #133C55;
-    font-weight: 200;
     background-color: #fefefe;
-    margin-top: 200px;
-    border: 1px solid #888;
+    margin-top: 150px;
   }
 
   .modal-backdrop {
     background-color: rgb(19, 60, 85, 0.7);
+ }
+
+ .modal-title {
+     font-family: 'Staatliches', cursive;
  }

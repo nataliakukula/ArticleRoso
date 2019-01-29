@@ -6,7 +6,16 @@ const NoteSchema = new Schema({
 
   title: String,
 
-  body: String
+  message: String,
+
+  created: {
+    type: Date,
+    default: Date.now
+  },
+
+  modifided: {
+    type: Date
+  }
 
 });
 

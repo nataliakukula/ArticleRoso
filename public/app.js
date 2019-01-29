@@ -15,14 +15,6 @@ $(document).ready(function () {
     // $(".container").hide();
   });
 
-  $(".note").click(function () {
-
-    event.preventDefault();
-    //Create modal card on create event
-    // $(".modal-body").text("add button");
-    $("#myModal").modal("show");
-  });
-
   //Save the playlist
   $(function () {
     $(".save-playlist").on("click", function (event) {
@@ -31,7 +23,6 @@ $(document).ready(function () {
 
       let id = $(this).data("id");
       // console.log(id);
-      // let thisId = $(this).attr("data-id");
 
       $.ajax("/playlist/" + id, {
         type: "PUT",
@@ -69,39 +60,70 @@ $(document).ready(function () {
     });
   });
 
-  // // Whenever someone clicks a p tag
-  // $(document).on("click", "p", function () {
-  //   // Empty the notes from the note section
-  //   $("#notes").empty();
-  //   // Save the id from the p tag
-  //   var thisId = $(this).attr("data-id");
+  // Whenever someone clicks on the playlist's note
+  $(function () {
+    $(".note").click(function () {
 
-  //   // Now make an ajax call for the Article
-  //   $.ajax({
-  //     method: "GET",
-  //     url: "/articles/" + thisId
-  //   })
-  //     // With that done, add the note information to the page
-  //     .then(function (data) {
-  //       console.log(data);
-  //       // The title of the article
-  //       $("#notes").append("<h2>" + data.title + "</h2>");
-  //       // An input to enter a new title
-  //       $("#notes").append("<input id='titleinput' name='title' >");
-  //       // A textarea to add a new note body
-  //       $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
-  //       // A button to submit a new note, with the id of the article saved to it
-  //       $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+      event.preventDefault();
 
-  //       // If there's a note in the article
-  //       if (data.note) {
-  //         // Place the title of the note in the title input
-  //         $("#titleinput").val(data.note.title);
-  //         // Place the body of the note in the body textarea
-  //         $("#bodyinput").val(data.note.body);
-  //       }
-  //     });
-  // });
+      $(".notes").empty();
+      $(".form-group").empty();
+
+      let id = $(this).data("id");
+      // console.log(id);
+
+      $.ajax({
+        method: "GET",
+        url: "/note/" + id
+      })
+        .then(function (data) {
+          // console.log("Playlist: ", data);
+          $(".modal-subtitle").html(data.title);
+          $(".form-group").append('<label for="note-title" class="col-form-label">Title:</label>');
+          $(".form-group").append('<input type="text" class="form-control" id="note-title">');
+          $(".form-group").append('<label for="note" class="col-form-label">Message:</label>');
+          $(".form-group").append('<textarea class="form-control" id="note-message"></textarea>');
+          $(".modal-footer").html('<button data-id="' + data._id + '"style="font-size: 22px;" type="button" class="submit-note btn btn-sm btn-outline-primary">Add Note</button>');
+
+          // If a playlist has notes display them
+          if (data.note.length > 0) {
+            // console.log("Note data:", data.note);
+            for (let i = 0; i < data.note.length; i++) {
+              $(".notes").prepend("<p class='data-entry' data-id=" + data._id + "><span class='dataTitle' data-id=" +
+                data._id + ">" + data.note[i].title + "</span><button class=delete><i class='fas fa-trash'></i></button></p>");
+            };
+          };
+
+          //Create modal card on create event
+          $("#myModal").modal("show");
+
+          $(".submit-note").on("click", function () {
+
+            event.preventDefault();
+
+            let id = $(this).data("id");
+            // console.log(id);
+
+            $.ajax({
+              type: "POST",
+              dataType: "json",
+              url: "/note/" + id,
+              data: {
+                title: $("#note-title").val(),
+                message: $("#note-message").val()
+              }
+            })
+              .then(function (data) {
+
+                // console.log(data);
+
+                $("#myModal").modal("hide");
+
+              });
+          });
+        });
+    });
+  });
 
   // // When you click the savenote button
   // $(document).on("click", "#save-playlist", function () {

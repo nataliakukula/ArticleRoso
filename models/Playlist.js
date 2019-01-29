@@ -24,12 +24,13 @@ const PlaylistSchema = new Schema({
     type: Boolean,
     default: false
   },
-
   //Populate Playlist with an associated Note
-  note: {
-    type: Schema.Types.ObjectId,
-    ref: "Note"
-  }
+  note: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Note"
+    }
+  ]
 });
 
 //Create a model for the MongoDB collections
