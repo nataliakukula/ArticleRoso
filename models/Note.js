@@ -4,9 +4,15 @@ const Schema = mongoose.Schema;
 
 const NoteSchema = new Schema({
 
-  title: String,
+  title: {
+    type: String,
+    required: true
+  },
 
-  message: String,
+  message: {
+    type: String,
+    required: true
+  },
 
   created: {
     type: Date,

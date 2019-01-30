@@ -82,6 +82,9 @@ app.get("/scrape", function (req, res) {
         let $ = cheerio.load(content);
 
         $('a.playableTile__mainHeading.audibleTile__mainHeading.playableTile__heading.playableTile__audibleHeading.audibleTile__audibleHeading').each(function (i, element) {
+
+            console.log($(this));
+
             let title = $(this).text();
             let playlistLink = $(this).attr("href");
             let imageLink = $(this).parent().parent().prev().children("a.playableTile__artworkLink.audibleTile__artworkLink").find("span").css("background-image");

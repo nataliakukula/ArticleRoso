@@ -80,7 +80,7 @@ $(document).ready(function () {
           $(".modal-subtitle").html(data.title);
           $(".form-group").append('<label for="note-title" class="col-form-label">Title:</label>');
           $(".form-group").append('<input type="text" class="form-control" id="note-title">');
-          $(".form-group").append('<label for="note" class="col-form-label">Message:</label>');
+          $(".form-group").append('<label for="note" class="col-form-label">Note:</label>');
           $(".form-group").append('<textarea class="form-control" id="note-message"></textarea>');
           $(".modal-footer").html('<button data-id="' + data._id + '"style="font-size: 22px;" type="button" class="submit-note btn btn-sm btn-outline-primary">Add Note</button>');
 
@@ -184,7 +184,6 @@ $(document).ready(function () {
               }
             });
           });
-
         });
     });
   });
