@@ -173,7 +173,7 @@ app.post("/note/:id", function (req, res) {
 });
 
 // Clear all collections
-app.delete("/clearall", function (req, res) {
+app.get("/clearall", function (req, res) {
 
     db.Playlist.remove({}, function (error, response) {
 
@@ -193,7 +193,7 @@ app.delete("/clearall", function (req, res) {
 });
 
 // Clear the saved playlists
-app.delete("/clearsaved", function (req, res) {
+app.get("/clearsaved", function (req, res) {
 
     db.Playlist.remove({ saved: true }, function (error, response) {
 
