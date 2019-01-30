@@ -12,7 +12,6 @@ $(document).ready(function () {
   //Show loading gif before page redirects from the "/scrape"
   $(".scraping").on("click", function () {
     $("#loading").show();
-    // $(".container").hide();
   });
 
   //Save the playlist
@@ -33,7 +32,7 @@ $(document).ready(function () {
         }
       }).then(
         function (data) {
-          console.log(data);
+          // console.log(data);
           // Reload the page to get the updated list
           location.reload();
         }
@@ -87,10 +86,10 @@ $(document).ready(function () {
 
           // If a playlist has notes display them
           if (data.note.length > 0) {
-            // console.log("Note data:", data.note);
+            console.log("Note data:", data.note);
             for (let i = 0; i < data.note.length; i++) {
-              $(".notes").prepend("<p class='data-entry' data-id=" + data._id + "><span class='dataTitle' data-id=" +
-                data._id + ">" + data.note[i].title + "</span><button class=delete><i class='fas fa-trash'></i></button></p>");
+              $(".notes").prepend("<div class='data-entry' data-id=" + data.note[i]._id + "><a href='' class='data-title' data-id=" +
+                data.note[i]._id + ">" + data.note[i].title + "</a><button class=delete-note><i class='fas fa-2x fa-trash'></i></button></div>");
             };
           };
 
@@ -114,43 +113,79 @@ $(document).ready(function () {
               }
             })
               .then(function (data) {
-
-                // console.log(data);
-
+                // console.log(data); 
                 $("#myModal").modal("hide");
 
               });
           });
+
+          $(".delete-note").on("click", function (event) {
+
+            event.preventDefault();
+
+            let selected = $(this).parent();
+            let id = selected.data("id");
+
+            $.ajax({
+              type: "GET",
+              url: "/delete/" + id,
+              success: function (response) {
+                // console.log(response);
+                selected.remove();
+              }
+            });
+          });
+
+          // When user click's on note title, show the note, and allow for updates
+          $(".data-title").on("click", function (event) {
+
+            event.preventDefault();
+            // Grab the element
+            let selected = $(this);
+            let id = selected.data("id");
+
+            $.ajax({
+              type: "GET",
+              url: "/find/" + id,
+              success: function (data) {
+
+                // console.log(data);
+                $(".notes").empty();
+                $("#note-title").val(data.title);
+                $("#note-message").val(data.message);
+                $(".modal-footer").html('<button data-id="' + data._id + '"style="font-size: 22px;" type="button" class="update-note btn btn-sm btn-outline-primary">Update Note</button>');
+              }
+            });
+          });
+
+          // When user click's update button, update the specific note
+          $(".modal-footer").on("click", "button.update-note", function (event) {
+
+            event.preventDefault();
+
+            // Save the selected element
+            let id = $(this).data("id");
+
+            $.ajax({
+              type: "PUT",
+              url: "/update/" + id,
+              dataType: "json",
+              data: {
+                title: $("#note-title").val(),
+                message: $("#note-message").val(),
+              },
+              // On successful call
+              success: function (data) {
+
+                console.log(data);
+
+                $("#myModal").modal("hide");
+
+              }
+            });
+          });
+
         });
     });
   });
-
-  // // When you click the savenote button
-  // $(document).on("click", "#save-playlist", function () {
-  //   // Grab the id associated with the article from the submit button
-  //   var thisId = $(this).attr("data-id");
-
-  //   // Run a POST request to change the note, using what's entered in the inputs
-  //   $.ajax({
-  //     method: "POST",
-  //     url: "/articles/" + thisId,
-  //     data: {
-  //       // Value taken from title input
-  //       title: $("#titleinput").val(),
-  //       // Value taken from note textarea
-  //       body: $("#bodyinput").val()
-  //     }
-  //   })
-  //     // With that done
-  //     .then(function (data) {
-  //       // Log the response
-  //       console.log(data);
-  //       // Empty the notes section
-  //       $("#notes").empty();
-  //     });
-
-  //   // Also, remove the values entered in the input and textarea for note entry
-  //   $("#titleinput").val("");
-  //   $("#bodyinput").val("");
-  // });
 });

@@ -135,12 +135,42 @@ footer {
     color: #133C55;
     background-color: #fefefe;
     margin-top: 150px;
-  }
+}
 
-  .modal-backdrop {
+.modal-backdrop {
     background-color: rgb(19, 60, 85, 0.7);
- }
+}
 
- .modal-title {
-     font-family: 'Staatliches', cursive;
- }
+.modal-title {
+    font-family: 'Staatliches', cursive;
+}
+
+.data-entry {
+    display: block;
+}
+
+.data-entry:hover {
+    color: #4788c7;
+}
+
+.data-title {
+    margin-left: 20px;
+    margin-bottom: 20px;
+    color: #133C55;
+    font-size: 30px;
+    font-weight: 200;
+}
+
+.data-title:hover{
+    text-decoration: none;
+    color: #4788c7;
+}
+
+.delete-note {
+    border: none;
+    color: #133C55;
+}
+
+.delete-note:hover {
+    color: #E1BC29;
+}

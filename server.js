@@ -169,19 +169,23 @@ app.post("/note/:id", function (req, res) {
         });
 });
 
-// Clear the collection
+// Clear all collections
 app.get("/clearall", function (req, res) {
 
     db.Playlist.remove({}, function (error, response) {
 
-        if (error) {
-            console.log(error);
-            res.send(error);
-        }
-        else {
-            console.log(response);
-            res.redirect("/");
-        }
+        if (error) throw error;
+
+        db.Note.remove({}, function (error, response) {
+            if (error) {
+                console.log(error);
+                res.send(error);
+            }
+            else {
+                console.log(response);
+                res.redirect("/");
+            }
+        });
     });
 });
 
@@ -216,6 +220,78 @@ app.get("/clear/:id", function (req, res) {
             else {
                 console.log(response);
                 res.redirect("/saved");
+            }
+        }
+    );
+});
+
+// Select just one note by an id
+app.get("/find/:id", function (req, res) {
+
+    db.Note.findOne(
+        {
+            _id: req.params.id
+        },
+        function (error, found) {
+            if (error) {
+                console.log(error);
+                res.send(error);
+            }
+            else {
+                // console.log(found);
+                res.json(found);
+            }
+        }
+    );
+});
+
+// Update just one note by an id
+app.put("/update/:id", function (req, res) {
+
+    console.log(req.body);
+
+    db.Note.update(
+        {
+            _id: req.params.id
+        },
+        {
+            $set: {
+                title: req.body.title,
+                message: req.body.message,
+                modified: Date.now()
+            }
+        },
+        function (error, edited) {
+            if (error) {
+                console.log(error);
+                res.send(error);
+            }
+            else {
+
+                console.log(edited);
+                res.send(edited);
+            }
+        }
+    );
+});
+
+// Delete one note:
+app.get("/delete/:id", function (req, res) {
+
+    // console.log(req.params.id);
+    // TODO How to delete reference in Playlist by using populate?
+
+    db.Note.remove(
+        {
+            _id: req.params.id
+        },
+        function (error, response) {
+            if (error) {
+                console.log(error);
+                res.send(error);
+            }
+            else {
+                res.json(response);
             }
         }
     );
