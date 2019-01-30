@@ -30,4 +30,4 @@
 
 ## Future Development:
 
-This is an MVP that utilizes CRUD functionality to save data in MongoDB, and therefore serves as a good example of a RESTful API and how to use the mongoose npm package and set up an express server in node.js. Otherwise, it could be developed to scrape playlists from the web and for users to save references to free music streaming in their accounts. However, I would reccommend to access API sources rather than scrape, not only because puppeteer is an inefficient compromise to scrape dynamic HTML, but also because it would minimize admin support.
+This is an MVP that utilizes CRUD functionality to save data in MongoDB, and therefore serves as a good example of how to use the mongoose npm package and set up an express server in node.js. Otherwise, it could be developed to scrape playlists from the web and for users to save references to free music streaming in their accounts. However, I would reccommend to access API sources rather than scrape, not only because puppeteer is an inefficient compromise to scrape dynamic HTML, but also because it would minimize admin support.
