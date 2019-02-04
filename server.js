@@ -82,7 +82,7 @@ app.get("/scrape", function (req, res) {
         await page.goto('https://soundcloud.com/discover/');
 
         let content = await page.content();
-        let $ = cheerio.load(content);
+        let $ = await cheerio.load(content);
 
         $('a.playableTile__mainHeading.audibleTile__mainHeading.playableTile__heading.playableTile__audibleHeading.audibleTile__audibleHeading').each(function (i, element) {
 
