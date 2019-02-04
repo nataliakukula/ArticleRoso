@@ -101,9 +101,9 @@ app.get("/scrape", function (req, res) {
         });
 
         // console.log(result);
-        browser.close();
+        await browser.close();
 
-        db.Playlist.create(result)
+        await db.Playlist.create(result)
             .then(dbPlaylists =>
                 console.log("Scrape Complete"),
                 res.redirect("/")
